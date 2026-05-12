@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Order Tracking</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="flex items-center gap-16">
+      <a href="javascript:history.back()" style="color:var(--neutral-700);display:flex;align-items:center;gap:6px;font-weight:500">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="15 18 9 12 15 6"/></svg>
+        <span data-i18n="back">Back</span>
+      </a>
+    </div>
+    <div class="navbar-actions">
+      <button class="voice-btn" onclick="Voice.speakKey('tracking_title')" title="Voice Guide"></button>
+      <button class="lang-toggle" style="position:static" onclick="App.toggleLang()">हिन्दी</button>
+    </div>
+  </nav>
+
+  <main style="margin-top:64px;padding:32px 24px;max-width:700px;margin-left:auto;margin-right:auto" class="page-enter">
+    <div class="section-header">
+      <h2 data-i18n="tracking_title">Order Tracking</h2>
+    </div>
+
+    <!-- Order Info Card -->
+    <div class="card mb-24">
+      <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:0.85rem;color:var(--neutral-500)" data-i18n="order_id">Order ID</div>
+          <div style="font-weight:700;font-size:1.1rem" id="trackingOrderId">ORD002</div>
+        </div>
+        <div class="badge badge-warning" id="trackingStatus">In Transit</div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:32px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:0.85rem;color:var(--neutral-500)">Crop</div>
+          <div style="font-weight:600">Onion x 5kg</div>
+        </div>
+        <div>
+          <div style="font-size:0.85rem;color:var(--neutral-500)" data-i18n="total">Total</div>
+          <div style="font-weight:600">₹150</div>
+        </div>
+        <div>
+          <div style="font-size:0.85rem;color:var(--neutral-500)" data-i18n="estimated_delivery">Estimated Delivery</div>
+          <div style="font-weight:600">May 9, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delivery Vehicle -->
+    <div style="text-align:center;margin:24px 0">
+      <svg viewBox="0 0 200 100" fill="none" class="delivery-vehicle" style="max-width:200px;margin:0 auto">
+        <rect x="20" y="40" width="100" height="45" rx="8" fill="#22c55e"/>
+        <rect x="120" y="25" width="60" height="60" rx="6" fill="#16a34a"/>
+        <rect x="130" y="32" width="40" height="25" rx="4" fill="#bbf7d0"/>
+        <circle cx="55" cy="90" r="12" fill="#404040"/><circle cx="55" cy="90" r="6" fill="#a3a3a3"/>
+        <circle cx="150" cy="90" r="12" fill="#404040"/><circle cx="150" cy="90" r="6" fill="#a3a3a3"/>
+        <path d="M10 55h10v20H10z" fill="#f59e0b"/>
+      </svg>
+    </div>
+
+    <!-- Tracking Timeline -->
+    <div class="card">
+      <div class="tracking-timeline" id="trackingTimeline"></div>
+    </div>
+
+    <!-- Simulate Progress Button -->
+    <div style="text-align:center;margin-top:24px">
+      <button class="btn btn-primary" onclick="Tracking.simulateProgress()" style="gap:8px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Simulate Next Step
+      </button>
+    </div>
+  </main>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/tracking.js"></script>
+</body>
+</html>

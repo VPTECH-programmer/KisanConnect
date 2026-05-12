@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <button class="lang-toggle" onclick="App.toggleLang()">हिन्दी</button>
+
+  <div class="login-page">
+    <div class="login-card page-enter">
+      <!-- Logo -->
+      <div style="margin-bottom:8px">
+        <svg viewBox="0 0 64 64" fill="none" width="64" height="64">
+          <circle cx="32" cy="32" r="30" fill="#dcfce7"/>
+          <path d="M32 14c-2 8-10 14-10 14s8 2 10 10c2-8 10-10 10-10s-8-6-10-14z" fill="#22c55e"/>
+        </svg>
+      </div>
+      <h1 data-i18n="login_title">Welcome Back</h1>
+      <p data-i18n="login_subtitle">Login with your mobile number</p>
+
+      <!-- Step 1: Mobile Number -->
+      <div id="mobileStep">
+        <div style="margin-bottom:20px">
+          <input type="tel" id="mobileInput" maxlength="10" placeholder="Enter mobile number" data-i18n-placeholder="mobile_placeholder"
+            style="text-align:center;font-size:1.2rem;letter-spacing:2px;font-weight:600">
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" onclick="Auth.sendOTP()" data-i18n="btn_send_otp">Send OTP</button>
+        <p style="margin-top:16px;font-size:0.85rem;color:var(--neutral-400)">
+          Demo: 9876543210 (Farmer) | 9999999999 (Consumer) | 8888888888 (Admin)
+        </p>
+      </div>
+
+      <!-- Step 2: OTP Verification -->
+      <div id="otpStep" class="hidden">
+        <p style="color:var(--primary-600);font-weight:600;margin-bottom:16px" data-i18n="otp_sent">OTP sent to your mobile</p>
+        <div class="otp-input-group">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 0)">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 1)">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 2)">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 3)">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 4)">
+          <input type="text" maxlength="1" class="otp-digit" oninput="Auth.otpNext(this, 5)">
+        </div>
+        <button class="btn btn-primary btn-block btn-lg mt-16" onclick="Auth.verifyOTP()" data-i18n="btn_verify">Verify & Login</button>
+        <button class="btn btn-ghost btn-block mt-8" onclick="Auth.resendOTP()">Resend OTP</button>
+        <p style="margin-top:12px;font-size:0.85rem;color:var(--neutral-400)">Demo OTP: 123456</p>
+      </div>
+
+      <div style="margin-top:24px">
+        <a href="index.html" style="font-size:0.9rem" data-i18n="back">Back</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

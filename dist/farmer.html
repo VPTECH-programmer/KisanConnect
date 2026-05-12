@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Farmer Dashboard</title>
+  <link rel="stylesheet" crossorigin href="/assets/style-BW3qsaPL.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="flex items-center gap-16">
+      <button class="hamburger" onclick="Farmer.toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="navbar-brand">
+        <svg viewBox="0 0 32 32" fill="none" width="32" height="32"><circle cx="16" cy="16" r="15" fill="#dcfce7"/><path d="M16 7c-1 4-5 7-5 7s4 1 5 5c1-4 5-5 5-5s-4-3-5-7z" fill="#22c55e"/></svg>
+        KisanConnect
+      </a>
+    </div>
+    <div class="navbar-actions">
+      <button class="voice-btn" onclick="Voice.speakKey('welcome_farmer')" title="Voice Guide"></button>
+      <button class="lang-toggle" style="position:static" onclick="App.toggleLang()">हिन्दी</button>
+      <button class="btn btn-ghost btn-sm" onclick="Farmer.logout()" style="display:flex;align-items:center;gap:6px;color:var(--error-500)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span data-i18n="logout">Logout</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="Farmer.toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div style="padding:8px 16px 24px;border-bottom:1px solid var(--neutral-100);margin-bottom:16px">
+      <h3 style="font-weight:700" data-i18n="welcome_farmer">Welcome, Ram!</h3>
+      <div class="verified-badge mt-8" id="kycBadge">
+        <svg viewBox="0 0 24 24" fill="#16a34a" width="16" height="16"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        <span data-i18n="kyc_verified">KYC Verified</span>
+      </div>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" onclick="Farmer.showSection('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span data-i18n="dashboard">Dashboard</span></a></li>
+      <li><a href="#" onclick="Farmer.showSection('crops')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2a10 10 0 0 0 0 20"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M2 12h20"/></svg>
+        <span data-i18n="my_crops">My Crops</span></a></li>
+      <li><a href="#" onclick="Farmer.showSection('orders')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span data-i18n="orders_received">Orders Received</span></a></li>
+      <li><a href="#" onclick="Farmer.showSection('earnings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span data-i18n="earnings">Earnings</span></a></li>
+      <li><a href="tracking.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 18V2H4a2 2 0 0 0-2 2v16"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg>
+        <span data-i18n="logistics">Logistics</span></a></li>
+      <li><a href="payment.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        <span data-i18n="payment_history">Payment History</span></a></li>
+      <li><a href="kyc.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>KYC</span></a></li>
+      <li style="margin-top:24px"><a href="#" onclick="Farmer.logout()" style="color:var(--error-500)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span data-i18n="logout">Logout</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-with-sidebar page-enter">
+    <!-- Dashboard Section -->
+    <section id="section-dashboard">
+      <div class="section-header">
+        <h2 data-i18n="welcome_farmer">Welcome, Ram!</h2>
+        <div class="verified-badge mt-8" id="kycBadgeMain">
+          <svg viewBox="0 0 24 24" fill="#16a34a" width="16" height="16"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          <span data-i18n="kyc_verified">KYC Verified</span>
+        </div>
+      </div>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--primary-100);color:var(--primary-600)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="stat-value">₹12,450</div>
+          <div class="stat-label" data-i18n="total_earnings">Total Earnings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--secondary-100);color:var(--secondary-600)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 2a10 10 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+          </div>
+          <div class="stat-value">5</div>
+          <div class="stat-label" data-i18n="active_listings">Active Listings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--accent-100);color:var(--accent-600)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+          </div>
+          <div class="stat-value">3</div>
+          <div class="stat-label" data-i18n="pending_orders">Pending Orders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:var(--success-50);color:var(--success-600)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="22" height="22"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="stat-value">8</div>
+          <div class="stat-label" data-i18n="completed_orders">Completed Orders</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px">
+        <button class="btn btn-primary" onclick="Farmer.showSection('crops');Farmer.showAddCrop()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="add_crop">Add Crop</span>
+        </button>
+        <a href="tracking.html" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 18V2H4a2 2 0 0 0-2 2v16"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg>
+          <span data-i18n="logistics">Logistics</span>
+        </a>
+        <a href="payment.html" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <span data-i18n="payment_history">Payment History</span>
+        </a>
+      </div>
+
+      <!-- Recent Orders -->
+      <h3 style="font-weight:700;margin-bottom:16px" data-i18n="orders_received">Orders Received</h3>
+      <div id="recentOrders"></div>
+
+      <!-- Trust & Rating Section -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px" id="trustRatingGrid">
+        <div class="glass-card">
+          <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span data-i18n="trust_score">Trust Score</span>
+          </h3>
+          <div id="farmerTrustBar"></div>
+          <div class="farmer-trust-stats mt-16" id="farmerTrustStats"></div>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+            <svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1" width="20" height="20"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="rating">Rating</span>
+          </h3>
+          <div id="farmerRatingDisplay"></div>
+          <div id="farmerReviewsList" style="margin-top:16px;max-height:200px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <!-- Verification Timeline -->
+      <div class="card mt-24" id="verificationTimeline">
+        <h3 style="font-weight:700;margin-bottom:16px">Verification Timeline</h3>
+        <div id="farmerVerificationTimeline"></div>
+      </div>
+
+      <!-- AI Demand Prediction -->
+      <div class="ai-prediction-panel" id="aiDemandPanel"></div>
+    </section>
+
+    <!-- Crops Section -->
+    <section id="section-crops" class="hidden">
+      <div class="flex justify-between items-center mb-24" style="flex-wrap:wrap;gap:12px">
+        <h2 data-i18n="my_crops">My Crops</h2>
+        <button class="btn btn-primary" onclick="Farmer.showAddCrop()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span data-i18n="add_crop">Add Crop</span>
+        </button>
+      </div>
+      <div class="crop-grid" id="cropGrid"></div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="section-orders" class="hidden">
+      <h2 data-i18n="orders_received">Orders Received</h2>
+      <div id="allOrders" style="margin-top:24px"></div>
+    </section>
+
+    <!-- Earnings Section -->
+    <section id="section-earnings" class="hidden">
+      <h2 data-i18n="earnings">Earnings</h2>
+      <div class="stat-cards" style="margin-top:24px">
+        <div class="stat-card">
+          <div class="stat-value" style="color:var(--primary-600)">₹12,450</div>
+          <div class="stat-label" data-i18n="total_earnings">Total Earnings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color:var(--secondary-600)">₹3,200</div>
+          <div class="stat-label">This Month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color:var(--accent-600)">₹840</div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+      <h3 style="font-weight:700;margin:24px 0 16px" data-i18n="payment_history">Payment History</h3>
+      <div id="earningsHistory"></div>
+    </section>
+  </main>
+
+  <!-- Add Crop Modal -->
+  <div class="modal-overlay hidden" id="addCropModal">
+    <div class="modal">
+      <div class="flex justify-between items-center mb-24">
+        <h2 data-i18n="add_crop">Add Crop</h2>
+        <button class="voice-btn" onclick="Voice.speakKey('add_crop')"></button>
+      </div>
+      <div class="flex flex-col gap-16">
+        <div>
+          <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="crop_name">Crop Name</label>
+          <input type="text" id="cropNameInput" placeholder="e.g. Potato" data-i18n-placeholder="crop_name" oninput="Farmer.updateGovtPriceGuide()">
+        </div>
+        <div>
+          <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="price">Price (per kg)</label>
+          <input type="number" id="cropPriceInput" placeholder="e.g. 25">
+          <div class="govt-price-guide" id="govtPriceGuide"></div>
+        </div>
+        <div>
+          <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="quantity">Quantity (kg)</label>
+          <input type="number" id="cropQtyInput" placeholder="e.g. 100">
+        </div>
+        <div class="purchase-limit-grid">
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block">Min purchase per order (kg)</label>
+            <input type="number" id="cropMinPurchaseInput" placeholder="e.g. 5">
+          </div>
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block">Max purchase per order (kg)</label>
+            <input type="number" id="cropMaxPurchaseInput" placeholder="e.g. 50">
+          </div>
+        </div>
+        <div>
+          <label style="font-weight:600;margin-bottom:6px;display:block">Category</label>
+          <select id="cropCategoryInput" style="width:100%;padding:12px 16px;border:2px solid var(--neutral-200);border-radius:var(--radius-md);font-size:1rem">
+            <option value="vegetables">Vegetables</option>
+            <option value="grains">Grains</option>
+            <option value="pulses">Pulses</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" onclick="Farmer.addCrop()" data-i18n="btn_list_crop">List Crop</button>
+        <button class="btn btn-ghost btn-block" onclick="Farmer.hideAddCrop()" data-i18n="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="#" class="active" onclick="Farmer.showSection('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <span data-i18n="dashboard">Dashboard</span>
+    </a>
+    <a href="#" onclick="Farmer.showSection('crops')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 2a10 10 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+      <span data-i18n="my_crops">My Crops</span>
+    </a>
+    <a href="tracking.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M14 18V2H4a2 2 0 0 0-2 2v16"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg>
+      <span data-i18n="logistics">Logistics</span>
+    </a>
+    <a href="#" onclick="Farmer.showSection('earnings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span data-i18n="earnings">Earnings</span>
+    </a>
+  </nav>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/farmer.js"></script>
+</body>
+</html>

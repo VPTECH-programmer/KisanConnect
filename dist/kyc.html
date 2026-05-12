@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Farmer Verification</title>
+  <link rel="stylesheet" crossorigin href="/assets/style-BW3qsaPL.css">
+</head>
+<body>
+  <button class="lang-toggle" onclick="App.toggleLang()">हिन्दी</button>
+
+  <div class="kyc-page">
+    <div class="kyc-card-wide page-enter">
+      <h1 style="text-align:center;margin-bottom:8px" data-i18n="kyc_title">Farmer Verification</h1>
+      <p style="text-align:center;color:var(--neutral-500);margin-bottom:32px" data-i18n="bhulekh_note">Land ownership verification is cross-checked with MP Bhulekh records for authenticity.</p>
+
+      <!-- Progress Steps -->
+      <div class="kyc-progress" id="kycProgress"></div>
+
+      <!-- Step 1: Aadhaar -->
+      <div class="kyc-step-content" id="kycStep1">
+        <div style="text-align:center;margin-bottom:24px">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56" style="margin:0 auto">
+            <circle cx="32" cy="32" r="30" fill="#dcfce7"/>
+            <path d="M32 16c-8 0-14 6-14 14s6 14 14 14 14-6 14-14-6-14-14-14z" fill="none" stroke="#16a34a" stroke-width="2"/>
+            <path d="M32 22v8M32 34h.01" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <h2 style="font-size:1.3rem;margin-top:12px" data-i18n="kyc_step1">Aadhaar Verification</h2>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="aadhaar_number">Aadhaar Number</label>
+          <input type="text" id="aadhaarInput" maxlength="14" placeholder="XXXX-XXXX-XXXX" data-i18n-placeholder="aadhaar_placeholder"
+            style="text-align:center;font-size:1.2rem;letter-spacing:2px;font-weight:600">
+        </div>
+        <div id="aadhaarOtpSection" class="hidden">
+          <p style="color:var(--primary-600);font-weight:600;margin-bottom:12px;text-align:center" data-i18n="aadhaar_otp_sent">OTP sent to Aadhaar-linked mobile</p>
+          <div class="otp-input-group">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 0)">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 1)">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 2)">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 3)">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 4)">
+            <input type="text" maxlength="1" class="kyc-otp-digit" oninput="KYC.otpNext(this, 5)">
+          </div>
+          <p style="text-align:center;font-size:0.85rem;color:var(--neutral-400);margin-top:8px">Demo OTP: 123456</p>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg mt-16" id="step1Btn" onclick="KYC.step1Action()" data-i18n="btn_send_aadhaar_otp">Send OTP</button>
+        <button class="voice-btn mt-8" style="margin:12px auto 0;display:flex" onclick="Voice.speakKey('kyc_step1')"></button>
+      </div>
+
+      <!-- Step 2: Kisan ID -->
+      <div class="kyc-step-content hidden" id="kycStep2">
+        <div style="text-align:center;margin-bottom:24px">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56" style="margin:0 auto">
+            <circle cx="32" cy="32" r="30" fill="#fef3c7"/>
+            <path d="M20 21v-2a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v2" stroke="#d97706" stroke-width="2" fill="none"/>
+            <circle cx="32" cy="30" r="8" stroke="#d97706" stroke-width="2" fill="none"/>
+          </svg>
+          <h2 style="font-size:1.3rem;margin-top:12px" data-i18n="kyc_step2">Kisan ID Verification</h2>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="kisan_id">Kisan ID</label>
+          <input type="text" id="kisanIdInput" placeholder="e.g. MP-KISAN-2025-0001" data-i18n-placeholder="kisan_id_placeholder"
+            style="text-align:center;font-size:1rem;letter-spacing:1px;font-weight:600">
+        </div>
+        <div id="kisanFetchLoader" class="hidden" style="text-align:center;padding:16px">
+          <div class="bhulekh-spinner" style="margin:0 auto 8px"></div>
+          <p style="color:var(--primary-600);font-weight:600" data-i18n="fetching_kisan">Fetching farmer registration details...</p>
+        </div>
+        <div id="kisanFetchResult" class="hidden bhulekh-result success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Kisan ID verified successfully</span>
+        </div>
+        <div class="flex gap-8 mt-16">
+          <button class="btn btn-ghost" onclick="KYC.goToStep(1)" data-i18n="btn_back">Back</button>
+          <button class="btn btn-primary" style="flex:1" onclick="KYC.verifyKisanId()" data-i18n="btn_next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Land Details -->
+      <div class="kyc-step-content hidden" id="kycStep3">
+        <div style="text-align:center;margin-bottom:24px">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56" style="margin:0 auto">
+            <circle cx="32" cy="32" r="30" fill="#f0fdfa"/>
+            <path d="M16 48l16-20 16 20" stroke="#0d9488" stroke-width="2" fill="none"/>
+            <path d="M24 48l8-10 8 10" stroke="#14b8a6" stroke-width="2" fill="none"/>
+          </svg>
+          <h2 style="font-size:1.3rem;margin-top:12px" data-i18n="kyc_step3">Land Details</h2>
+        </div>
+        <div class="flex flex-col gap-16">
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="khasra_number">Khasra Number</label>
+            <input type="text" id="khasraInput" placeholder="e.g. KH-234/5" data-i18n-placeholder="khasra_placeholder">
+          </div>
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="village_name">Village Name</label>
+            <input type="text" id="villageInput" placeholder="Enter village name">
+          </div>
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="district">District</label>
+            <input type="text" id="districtInput" placeholder="Enter district">
+          </div>
+          <div>
+            <label style="font-weight:600;margin-bottom:6px;display:block" data-i18n="state">State</label>
+            <select id="stateInput" style="width:100%;padding:12px 16px;border:2px solid var(--neutral-200);border-radius:var(--radius-md);font-size:1rem">
+              <option value="" data-i18n="select_state">Select State</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex gap-8 mt-16">
+          <button class="btn btn-ghost" onclick="KYC.goToStep(2)" data-i18n="btn_back">Back</button>
+          <button class="btn btn-primary" style="flex:1" onclick="KYC.verifyLandDetails()" data-i18n="btn_next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Document Upload -->
+      <div class="kyc-step-content hidden" id="kycStep4">
+        <div style="text-align:center;margin-bottom:24px">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56" style="margin:0 auto">
+            <circle cx="32" cy="32" r="30" fill="#fef3c7"/>
+            <path d="M32 18v16M24 26l8-8 8 8" stroke="#d97706" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M20 42h24" stroke="#d97706" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <h2 style="font-size:1.3rem;margin-top:12px" data-i18n="kyc_step4">Document Upload</h2>
+        </div>
+        <div class="flex flex-col gap-16">
+          <div class="upload-zone" id="uploadAadhaar" onclick="KYC.simulateUpload('uploadAadhaar')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M32 18v16M24 26l8-8 8 8" stroke-linecap="round"/><path d="M20 42h24" stroke-linecap="round"/></svg>
+            <p data-i18n="upload_aadhaar">Upload Aadhaar Copy</p>
+            <p class="upload-check hidden" style="color:var(--primary-600);font-weight:600" data-i18n="upload_simulated">File uploaded (simulated)</p>
+          </div>
+          <div class="upload-zone" id="uploadLand" onclick="KYC.simulateUpload('uploadLand')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <p data-i18n="upload_land_proof">Upload Land Proof</p>
+            <p class="upload-check hidden" style="color:var(--primary-600);font-weight:600" data-i18n="upload_simulated">File uploaded (simulated)</p>
+          </div>
+          <div class="upload-zone" id="uploadPhoto" onclick="KYC.simulateUpload('uploadPhoto')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <p data-i18n="upload_photo">Upload Farmer Photo</p>
+            <p class="upload-check hidden" style="color:var(--primary-600);font-weight:600" data-i18n="upload_simulated">File uploaded (simulated)</p>
+          </div>
+        </div>
+        <div class="flex gap-8 mt-16">
+          <button class="btn btn-ghost" onclick="KYC.goToStep(3)" data-i18n="btn_back">Back</button>
+          <button class="btn btn-primary" style="flex:1" onclick="KYC.goToStep(5)" data-i18n="btn_next">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Review & Submit -->
+      <div class="kyc-step-content hidden" id="kycStep5">
+        <div style="text-align:center;margin-bottom:24px">
+          <svg viewBox="0 0 64 64" fill="none" width="56" height="56" style="margin:0 auto">
+            <circle cx="32" cy="32" r="30" fill="#dcfce7"/>
+            <path d="M22 32l6 6 14-14" stroke="#16a34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <h2 style="font-size:1.3rem;margin-top:12px" data-i18n="kyc_step5">Review & Submit</h2>
+        </div>
+        <div class="card-flat" style="margin-bottom:16px">
+          <div id="reviewSummary"></div>
+        </div>
+        <div style="background:var(--primary-50);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:16px;font-size:0.85rem;color:var(--primary-700);display:flex;align-items:center;gap:8px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span data-i18n="bhulekh_note">Land ownership verification is cross-checked with MP Bhulekh records for authenticity.</span>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-ghost" onclick="KYC.goToStep(4)" data-i18n="btn_back">Back</button>
+          <button class="btn btn-primary" style="flex:1" onclick="KYC.submitVerification()" data-i18n="btn_submit_verification">Submit for Verification</button>
+        </div>
+      </div>
+
+      <!-- Success State -->
+      <div class="kyc-step-content hidden" id="kycSuccess">
+        <div class="kyc-success" style="text-align:center">
+          <div class="kyc-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" width="40" height="40"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 style="color:var(--primary-700);font-size:1.5rem;margin-bottom:8px" data-i18n="kyc_success">Verification Submitted!</h2>
+          <p style="color:var(--neutral-500);margin-bottom:8px" data-i18n="kyc_pending">Pending Admin Verification</p>
+          <p style="color:var(--neutral-400);font-size:0.9rem;margin-bottom:24px" data-i18n="kyc_badge">Your verification is under review</p>
+          <div class="badge-warning" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-full);background:var(--warning-50);color:var(--warning-600);font-weight:600;margin-bottom:24px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Pending Verification
+          </div>
+          <a href="farmer.html" class="btn btn-primary btn-block btn-lg" data-i18n="dashboard">Go to Dashboard</a>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;text-align:center">
+        <a href="farmer.html" style="font-size:0.9rem" data-i18n="back">Back</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/kyc.js"></script>
+</body>
+</html>

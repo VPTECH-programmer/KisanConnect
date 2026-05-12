@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Consumer Marketplace</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="flex items-center gap-16">
+      <button class="hamburger" onclick="ConsumerApp.toggleSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="navbar-brand">
+        <svg viewBox="0 0 32 32" fill="none" width="32" height="32"><circle cx="16" cy="16" r="15" fill="#dcfce7"/><path d="M16 7c-1 4-5 7-5 7s4 1 5 5c1-4 5-5 5-5s-4-3-5-7z" fill="#22c55e"/></svg>
+        KisanConnect
+      </a>
+    </div>
+    <div class="navbar-actions">
+      <button class="voice-btn" onclick="Voice.speakKey('browse_market')" title="Voice Guide"></button>
+      <div class="cart-badge">
+        <a href="#" onclick="ConsumerApp.showSection('cart')" style="color:var(--neutral-700)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.36-5.43H5.12"/></svg>
+        </a>
+        <span class="count cart-count" style="display:none">0</span>
+      </div>
+      <button class="lang-toggle" style="position:static" onclick="App.toggleLang()">हिन्दी</button>
+    </div>
+  </nav>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="ConsumerApp.toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div style="padding:8px 16px 24px;border-bottom:1px solid var(--neutral-100);margin-bottom:16px">
+      <h3 style="font-weight:700" data-i18n="welcome_consumer">Welcome, Shyam!</h3>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="#" class="active" onclick="ConsumerApp.showSection('market')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2a10 10 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+        <span data-i18n="browse_market">Browse Market</span></a></li>
+      <li><a href="#" onclick="ConsumerApp.showSection('cart')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.36-5.43H5.12"/></svg>
+        <span data-i18n="cart">Cart</span></a></li>
+      <li><a href="#" onclick="ConsumerApp.showSection('orders')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+        <span data-i18n="my_orders">My Orders</span></a></li>
+      <li><a href="#" onclick="ConsumerApp.showSection('favorites')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span data-i18n="favorites">Favorites</span></a></li>
+      <li><a href="tracking.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 18V2H4a2 2 0 0 0-2 2v16"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg>
+        <span data-i18n="logistics">Logistics</span></a></li>
+      <li style="margin-top:24px"><a href="#" onclick="ConsumerApp.logout()" style="color:var(--error-500)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span data-i18n="logout">Logout</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-with-sidebar page-enter">
+    <!-- Market Section -->
+    <section id="section-market">
+      <div class="section-header">
+        <h2 data-i18n="browse_market">Browse Market</h2>
+      </div>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search crops..." data-i18n-placeholder="search_crops" oninput="ConsumerApp.filterCrops()">
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="ConsumerApp.setFilter('all')" data-i18n="filter_all">All</button>
+        <button class="filter-tab" onclick="ConsumerApp.setFilter('vegetables')" data-i18n="filter_vegetables">Vegetables</button>
+        <button class="filter-tab" onclick="ConsumerApp.setFilter('grains')" data-i18n="filter_grains">Grains</button>
+        <button class="filter-tab" onclick="ConsumerApp.setFilter('pulses')" data-i18n="filter_pulses">Pulses</button>
+      </div>
+
+      <!-- Crop Grid -->
+      <div class="crop-grid" id="marketGrid"></div>
+
+      <!-- Marketplace Sections -->
+      <div class="marketplace-section mt-24" id="topRatedSection">
+        <div class="marketplace-section-header">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="1" width="20" height="20"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="top_rated">Top Rated Farmers</span>
+          </h3>
+        </div>
+        <div class="horizontal-scroll" id="topRatedFarmers"></div>
+      </div>
+
+      <div class="marketplace-section" id="mostTrustedSection">
+        <div class="marketplace-section-header">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--primary-600)" stroke-width="2" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span data-i18n="most_trusted">Most Trusted Sellers</span>
+          </h3>
+        </div>
+        <div class="horizontal-scroll" id="mostTrustedFarmers"></div>
+      </div>
+
+      <div class="marketplace-section" id="recentlyVerifiedSection">
+        <div class="marketplace-section-header">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="recently_verified">Recently Verified</span>
+          </h3>
+        </div>
+        <div class="horizontal-scroll" id="recentlyVerifiedFarmers"></div>
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="section-cart" class="hidden">
+      <h2 data-i18n="cart">Cart</h2>
+      <div id="cartItems" style="margin-top:24px"></div>
+      <div id="cartSummary" class="hidden" style="margin-top:24px">
+        <div class="card" style="background:var(--primary-50)">
+          <div class="flex justify-between items-center" style="font-size:1.2rem;font-weight:700">
+            <span data-i18n="total">Total</span>
+            <span id="cartTotal">₹0</span>
+          </div>
+          <button class="btn btn-primary btn-block btn-lg mt-16" onclick="ConsumerApp.checkout()" data-i18n="checkout">Checkout</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Orders Section -->
+    <section id="section-orders" class="hidden">
+      <h2 data-i18n="my_orders">My Orders</h2>
+      <div id="consumerOrders" style="margin-top:24px"></div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section id="section-favorites" class="hidden">
+      <h2 data-i18n="favorites">Favorites</h2>
+      <div id="favoritesGrid" class="crop-grid" style="margin-top:24px"></div>
+    </section>
+  </main>
+
+  <!-- Farmer Profile Modal -->
+  <div class="modal-overlay hidden" id="farmerProfileModal">
+    <div class="modal" style="max-width:560px">
+      <div class="flex justify-between items-center mb-16">
+        <h2>Farmer Profile</h2>
+        <button class="btn btn-ghost btn-sm" onclick="ConsumerApp.closeFarmerProfile()">Close</button>
+      </div>
+      <div id="farmerProfileContent"></div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay hidden" id="reviewModal">
+    <div class="modal" style="max-width:480px">
+      <div class="flex justify-between items-center mb-16">
+        <h2 data-i18n="write_review">Write a Review</h2>
+        <button class="btn btn-ghost btn-sm" onclick="ConsumerApp.closeReviewModal()">Close</button>
+      </div>
+      <div class="review-form">
+        <div style="margin-bottom:16px">
+          <label style="font-weight:600;margin-bottom:8px;display:block" data-i18n="rating">Overall Rating</label>
+          <div id="reviewOverallStars"></div>
+        </div>
+        <div class="rating-input-group">
+          <div class="rating-input-item">
+            <label data-i18n="product_quality">Product Quality</label>
+            <div id="reviewQualityStars"></div>
+          </div>
+          <div class="rating-input-item">
+            <label data-i18n="delivery_rating">Delivery</label>
+            <div id="reviewDeliveryStars"></div>
+          </div>
+          <div class="rating-input-item">
+            <label data-i18n="packaging_rating">Packaging</label>
+            <div id="reviewPackagingStars"></div>
+          </div>
+          <div class="rating-input-item">
+            <label data-i18n="communication_rating">Communication</label>
+            <div id="reviewCommStars"></div>
+          </div>
+        </div>
+        <textarea id="reviewText" placeholder="Share your experience..." data-i18n-placeholder="review_placeholder" style="margin-bottom:16px"></textarea>
+        <button class="btn btn-primary btn-block" onclick="ConsumerApp.submitReview()" data-i18n="submit_review">Submit Review</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="#" class="active" onclick="ConsumerApp.showSection('market')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 2a10 10 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+      <span data-i18n="browse_market">Market</span>
+    </a>
+    <a href="#" onclick="ConsumerApp.showSection('cart')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.36-5.43H5.12"/></svg>
+      <span data-i18n="cart">Cart</span>
+    </a>
+    <a href="#" onclick="ConsumerApp.showSection('orders')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+      <span data-i18n="my_orders">Orders</span>
+    </a>
+    <a href="#" onclick="ConsumerApp.showSection('favorites')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span data-i18n="favorites">Favorites</span>
+    </a>
+  </nav>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/consumer.js"></script>
+</body>
+</html>

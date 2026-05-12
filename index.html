@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanConnect - Farm Fresh, Direct to You</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Language Toggle -->
+  <button class="lang-toggle" onclick="App.toggleLang()">हिन्दी</button>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content page-enter">
+        <h1 data-i18n="hero_title">Direct Farmer-to-Consumer Marketplace</h1>
+        <p data-i18n="hero_subtitle">Eliminating middlemen. Ensuring fair prices for farmers and fresh produce for consumers.</p>
+        <div class="flex gap-16" style="flex-wrap:wrap">
+          <a href="login.html?role=farmer" class="btn btn-primary btn-lg">
+            <span data-i18n="btn_farmer">I am a Farmer</span>
+          </a>
+          <a href="login.html?role=consumer" class="btn btn-secondary btn-lg">
+            <span data-i18n="btn_consumer">I am a Consumer</span>
+          </a>
+          <a href="login.html?role=admin" class="btn btn-outline btn-lg">
+            <span data-i18n="btn_admin">Admin Panel</span>
+          </a>
+        </div>
+        <button class="voice-btn mt-16" onclick="Voice.speakKey('hero_subtitle')" title="Listen"></button>
+      </div>
+      <!-- Floating SVGs -->
+      <div class="floating-svg" style="top:15%;right:10%;width:80px;opacity:0.3">
+        <svg viewBox="0 0 80 80" fill="none"><ellipse cx="40" cy="45" rx="28" ry="22" fill="#D4A574"/><path d="M35 25c0-8 5-15 5-15s5 7 5 15" fill="#4ade80"/></svg>
+      </div>
+      <div class="floating-svg" style="top:60%;right:25%;width:60px;opacity:0.25">
+        <svg viewBox="0 0 80 80" fill="none"><circle cx="40" cy="45" r="24" fill="#ef4444"/><path d="M32 22c4-6 8-8 8-8s4 2 8 8" fill="#4ade80"/></svg>
+      </div>
+      <div class="floating-svg" style="top:30%;right:35%;width:70px;opacity:0.2">
+        <svg viewBox="0 0 80 80" fill="none"><path d="M40 70V20" stroke="#D97706" stroke-width="3"/><path d="M40 20c-8-4-14-12-14-12s8 2 14 8c6-6 14-8 14-8s-6 8-14 12z" fill="#FDE68A"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3 class="counter-animate" data-target="1247">0</h3>
+          <p data-i18n="stats_farmers">Farmers Onboarded</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="counter-animate" data-target="5832">0</h3>
+          <p data-i18n="stats_consumers">Happy Consumers</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="counter-animate" data-target="18456">0</h3>
+          <p data-i18n="stats_orders">Orders Delivered</p>
+        </div>
+        <div class="stat-item">
+          <h3 class="counter-animate" data-target="35">0</h3>
+          <p data-i18n="stats_savings">Consumer Savings (%)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Role Cards -->
+  <section style="padding:80px 0">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2 data-i18n="app_name">KisanConnect</h2>
+        <p data-i18n="tagline">Farm Fresh, Direct to You</p>
+      </div>
+      <div class="role-cards">
+        <a href="login.html?role=farmer" class="role-card" style="text-decoration:none;color:inherit">
+          <svg viewBox="0 0 64 64" fill="none" width="64" height="64"><circle cx="32" cy="20" r="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M16 56c0-10 7-18 16-18s16 8 16 18" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/><path d="M32 38v-8" stroke="#16a34a" stroke-width="2"/><path d="M24 30l8 8 8-8" stroke="#16a34a" stroke-width="2"/></svg>
+          <h3 data-i18n="btn_farmer">I am a Farmer</h3>
+          <p>Sell directly, earn more</p>
+        </a>
+        <a href="login.html?role=consumer" class="role-card" style="text-decoration:none;color:inherit">
+          <svg viewBox="0 0 64 64" fill="none" width="64" height="64"><circle cx="32" cy="20" r="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><path d="M16 56c0-10 7-18 16-18s16 8 16 18" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><circle cx="44" cy="44" r="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><path d="M40 44h8M44 40v8" stroke="#d97706" stroke-width="2"/></svg>
+          <h3 data-i18n="btn_consumer">I am a Consumer</h3>
+          <p>Buy fresh, save more</p>
+        </a>
+        <a href="login.html?role=admin" class="role-card" style="text-decoration:none;color:inherit">
+          <svg viewBox="0 0 64 64" fill="none" width="64" height="64"><rect x="12" y="12" width="40" height="40" rx="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="2"/><path d="M24 44V32M32 44V24M40 44V36" stroke="#0d9488" stroke-width="3" stroke-linecap="round"/></svg>
+          <h3 data-i18n="btn_admin">Admin Panel</h3>
+          <p>Monitor & manage</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section style="padding:80px 0;background:var(--neutral-50)">
+    <div class="container">
+      <div class="section-header text-center">
+        <h2 data-i18n="how_it_works">How It Works</h2>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3 data-i18n="step1_title">Farmer Lists Crops</h3>
+          <p data-i18n="step1_desc">Verified farmers list fresh produce directly on the platform</p>
+          <button class="voice-btn mt-8" onclick="Voice.speakKey('step1_desc')"></button>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3 data-i18n="step2_title">Consumer Orders</h3>
+          <p data-i18n="step2_desc">Browse, compare prices, and order directly from farmers</p>
+          <button class="voice-btn mt-8" onclick="Voice.speakKey('step2_desc')"></button>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3 data-i18n="step3_title">Fresh Delivery</h3>
+          <p data-i18n="step3_desc">Get farm-fresh produce delivered with full logistics tracking</p>
+          <button class="voice-btn mt-8" onclick="Voice.speakKey('step3_desc')"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aadhaar Trust & Logistics -->
+  <section style="padding:80px 0">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h3 style="display:flex;align-items:center;gap:10px">
+            <span style="color:var(--primary-600)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+            <span data-i18n="aadhaar_trust">Aadhaar Verified Trust</span>
+          </h3>
+          <p data-i18n="aadhaar_desc" style="color:var(--neutral-600);line-height:1.7;margin-top:12px">Every farmer is Aadhaar-verified ensuring trust and transparency in every transaction</p>
+          <button class="voice-btn mt-16" onclick="Voice.speakKey('aadhaar_desc')"></button>
+        </div>
+        <div class="benefit-card">
+          <h3 style="display:flex;align-items:center;gap:10px">
+            <span style="color:var(--primary-600)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M14 18V2H4a2 2 0 0 0-2 2v16"/><path d="M14 6h4l4 4v8"/><circle cx="7" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg></span>
+            <span data-i18n="logistics_title">Reliable Logistics Support</span>
+          </h3>
+          <p data-i18n="logistics_desc" style="color:var(--neutral-600);line-height:1.7;margin-top:12px">End-to-end delivery tracking from farm to your doorstep</p>
+          <div style="margin-top:20px"><svg viewBox="0 0 200 100" fill="none" class="delivery-vehicle"><rect x="20" y="40" width="100" height="45" rx="8" fill="#22c55e"/><rect x="120" y="25" width="60" height="60" rx="6" fill="#16a34a"/><rect x="130" y="32" width="40" height="25" rx="4" fill="#bbf7d0"/><circle cx="55" cy="90" r="12" fill="#404040"/><circle cx="55" cy="90" r="6" fill="#a3a3a3"/><circle cx="150" cy="90" r="12" fill="#404040"/><circle cx="150" cy="90" r="6" fill="#a3a3a3"/><path d="M10 55h10v20H10z" fill="#f59e0b"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h3 style="color:var(--primary-700)" data-i18n="farmer_benefits">Farmer Benefits</h3>
+          <ul class="benefit-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="farmer_benefit1">Fair prices - No middlemen</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="farmer_benefit2">Direct payment to bank</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="farmer_benefit3">Aadhaar verified trust badge</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="farmer_benefit4">Free logistics support</span></li>
+          </ul>
+        </div>
+        <div class="benefit-card">
+          <h3 style="color:var(--secondary-600)" data-i18n="consumer_benefits">Consumer Benefits</h3>
+          <ul class="benefit-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="consumer_benefit1">Farm-fresh produce</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="consumer_benefit2">Transparent pricing</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="consumer_benefit3">Verified farmer sources</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" width="20" height="20"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="consumer_benefit4">Live order tracking</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-i18n="cta_title">Ready to go direct?</h2>
+      <p data-i18n="cta_subtitle">Join thousands of farmers and consumers on KisanConnect</p>
+      <a href="login.html" class="btn btn-lg" data-i18n="btn_get_started">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background:var(--neutral-900);color:var(--neutral-400);padding:32px 0;text-align:center;font-size:0.9rem">
+    <div class="container">
+      <p>BGI Hackathon 2026 | Problem Statement BT3P2 | KisanConnect Prototype</p>
+    </div>
+  </footer>
+
+  <script src="data/translations.js"></script>
+  <script src="data/demo.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Animated counters on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.counter-animate');
+          counters.forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            animateCounter(el, target);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stats-section').forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
